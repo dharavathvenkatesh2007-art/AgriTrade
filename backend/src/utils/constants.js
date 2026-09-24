@@ -1,0 +1,46 @@
+export const roles = {
+  ADMIN: "ADMIN",
+  FARMER: "FARMER",
+  COLLECTION_MANAGER: "COLLECTION_MANAGER",
+  INSPECTOR: "INSPECTOR",
+  BUYER: "BUYER",
+  LOGISTICS: "LOGISTICS"
+};
+
+export const lotStatuses = [
+  "CREATED",
+  "RECEIVED",
+  "INSPECTION_PENDING",
+  "INSPECTED",
+  "ACCEPTED",
+  "REJECTED",
+  "STORED",
+  "ALLOCATED",
+  "DISPATCHED",
+  "DELIVERED"
+];
+
+export const poStatuses = [
+  "DRAFT",
+  "SUBMITTED",
+  "APPROVED",
+  "PARTIALLY_ALLOCATED",
+  "FULLY_ALLOCATED",
+  "PARTIALLY_FULFILLED",
+  "FULFILLED",
+  "CANCELLED"
+];
+
+export const shipmentStatuses = [
+  "PLANNED",
+  "VEHICLE_ASSIGNED",
+  "READY_FOR_DISPATCH",
+  "DISPATCHED",
+  "IN_TRANSIT",
+  "OUT_FOR_DELIVERY",
+  "DELIVERED",
+  "FAILED"
+];
+
+export const settlementStatuses = ["PENDING", "CALCULATED", "APPROVED", "PAID", "ON_HOLD"];
+export const disputeStatuses = ["OPEN", "UNDER_REVIEW", "INVESTIGATION", "RESOLVED", "REJECTED", "CLOSED"];

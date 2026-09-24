@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  color: #000000;
+  background-color: #f4f8f3;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #000000;
+  background-color: #f4f8f3;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Force all text to be crisp, bold black / dark slate */
+h1, h2, h3, h4, h5, h6 {
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+p, span, label, td, th, div {
+  color: #0f172a;
+}
+
+/* Form Inputs - High Contrast Black Text on White Background */
+input, select, textarea {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border: 1.5px solid #64748b !important;
+  font-weight: 700 !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #64748b !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #16a34a !important;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2) !important;
+}
+
+/* Card contrast */
+.card-contrast {
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  color: #000000;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+/* Table grid fallback */
+.table-card {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr 0.9fr 0.7fr;
+}
+
+@media (max-width: 768px) {
+  .table-card {
+    display: block;
+  }
+}
