@@ -20,7 +20,7 @@ import {
 import { useAppStore } from "../store/useAppStore.js";
 import { humanStatus } from "../utils/status.js";
 
-// Master list of navigation items with role permissions
+// Role-based navigation item rules
 const allNavItems = [
   {
     to: "/app",
@@ -31,9 +31,17 @@ const allNavItems = [
   {
     to: "/app/lots",
     label: "Produce Lots",
-    farmerLabel: "My Produce Lots (+Add)",
+    farmerLabel: "My Produce Lots (+Sell)",
     icon: Leaf,
     roles: ["ADMIN", "FARMER", "COLLECTION_MANAGER", "INSPECTOR"]
+  },
+  {
+    to: "/app/orders",
+    label: "Purchase Orders",
+    buyerLabel: "E-Commerce Produce Store",
+    icon: FileText,
+    buyerIcon: ShoppingBag,
+    roles: ["ADMIN", "BUYER"]
   },
   {
     to: "/app/inspections",
@@ -46,14 +54,6 @@ const allNavItems = [
     label: "Warehouse & Inventory",
     icon: Warehouse,
     roles: ["ADMIN", "COLLECTION_MANAGER", "LOGISTICS"]
-  },
-  {
-    to: "/app/orders",
-    label: "Purchase Orders",
-    buyerLabel: "Cleared Marketplace & POs",
-    icon: FileText,
-    buyerIcon: ShoppingBag,
-    roles: ["ADMIN", "BUYER"]
   },
   {
     to: "/app/shipments",
@@ -112,38 +112,37 @@ export function Sidebar({ isOpen, onClose }) {
   const { user } = useAppStore();
   const userRole = user?.role || "FARMER";
 
-  // Filter items allowed for current user role
   const roleNavItems = allNavItems.filter((item) => item.roles.includes(userRole));
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-40 w-72 transform border-r border-slate-300 bg-white p-5 transition-transform duration-200 ease-in-out dark:border-white/15 dark:bg-[#122419] lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 z-40 w-72 transform border-r border-slate-300 bg-white p-5 transition-transform duration-200 ease-in-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 ${
         isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
       }`}
     >
       {/* Brand Header */}
       <div className="flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2.5 text-2xl font-black text-leaf-700 dark:text-leaf-300">
+        <Link to="/" className="flex items-center gap-2.5 text-2xl font-black text-leaf-700">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-leaf-600 text-white shadow-md">
             <Sprout className="h-6 w-6" />
           </div>
-          <span>AgriTrade</span>
+          <span className="text-slate-900">AgriTrade</span>
         </Link>
         <button
           onClick={onClose}
-          className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10 lg:hidden"
+          className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 lg:hidden"
         >
           <X className="h-5 w-5" />
         </button>
       </div>
 
       {/* Role Badge Box */}
-      <div className="mt-5 rounded-2xl bg-leaf-950 p-4 text-white shadow-md border border-leaf-700/60 dark:bg-black/40">
-        <p className="text-[11px] font-black uppercase tracking-wider text-leaf-300">Current Role Portal</p>
+      <div className="mt-5 rounded-2xl bg-leaf-950 p-4 text-white shadow-md border border-leaf-800">
+        <p className="text-[11px] font-black uppercase tracking-wider text-leaf-300">Active User Role</p>
         <p className="mt-0.5 text-base font-black text-white">
           {humanStatus(userRole)}
         </p>
-        <p className="mt-0.5 text-xs font-extrabold text-slate-200">{user?.name || "Demo User"}</p>
+        <p className="mt-0.5 text-xs font-bold text-slate-200">{user?.name || "Demo User"}</p>
       </div>
 
       {/* Role Navigation Items */}
@@ -165,11 +164,11 @@ export function Sidebar({ isOpen, onClose }) {
                 `flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-black transition-all ${
                   isActive
                     ? "bg-leaf-600 text-white shadow-md"
-                    : "text-slate-800 hover:bg-leaf-50 hover:text-leaf-800 dark:text-slate-100 dark:hover:bg-white/10 dark:hover:text-white"
+                    : "text-slate-900 hover:bg-leaf-50 hover:text-leaf-900"
                 }`
               }
             >
-              <Icon className="h-4 w-4 shrink-0" />
+              <Icon className="h-4.5 w-4.5 shrink-0" />
               <span>{label}</span>
             </NavLink>
           );

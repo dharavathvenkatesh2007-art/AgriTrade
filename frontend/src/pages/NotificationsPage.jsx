@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Bell, CheckCircle2, Info, Check } from "lucide-react";
+import { Bell, Check } from "lucide-react";
 import { PageHeader } from "../components/PageHeader.jsx";
 import { notifications as initialNotifications } from "../data/demoData.js";
 
@@ -11,7 +11,7 @@ export function NotificationsPage() {
   }
 
   return (
-    <div className="space-y-6 text-slate-900 dark:text-white">
+    <div className="space-y-6 text-slate-900">
       <PageHeader
         title="In-App Notification Center"
         subtitle="Role-specific alert triggers for lot intake, inspection results, purchase order allocations, transit dispatches, and settlement payouts."
@@ -31,8 +31,8 @@ export function NotificationsPage() {
             key={idx}
             className={`flex items-start gap-4 rounded-3xl border-2 p-6 shadow-md transition-all ${
               item.unread
-                ? "border-leaf-400 bg-leaf-100/90 dark:border-leaf-600 dark:bg-[#102d1d]"
-                : "border-slate-300 bg-white dark:border-white/20 dark:bg-[#122419]"
+                ? "border-leaf-400 bg-leaf-100/90"
+                : "border-slate-300 bg-white"
             }`}
           >
             <div
@@ -49,10 +49,10 @@ export function NotificationsPage() {
 
             <div className="flex-1">
               <div className="flex items-center justify-between">
-                <h4 className="text-base font-black text-slate-950 dark:text-white">{item.title}</h4>
-                <span className="text-xs font-black text-slate-700 dark:text-slate-300">{item.time}</span>
+                <h4 className="text-base font-black text-slate-950">{item.title}</h4>
+                <span className="text-xs font-black text-slate-700">{item.time}</span>
               </div>
-              <p className="mt-2 text-xs font-bold leading-relaxed text-slate-900 dark:text-slate-100">
+              <p className="mt-2 text-xs font-bold leading-relaxed text-slate-900">
                 {item.message}
               </p>
             </div>
