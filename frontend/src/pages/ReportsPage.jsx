@@ -55,26 +55,26 @@ export function ReportsPage() {
       />
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-[#14281d]">
-          <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">Monthly Procurement Volume (Tons)</h3>
-          <p className="text-xs text-slate-500 mb-6">Quantity of produce lots accepted across centers</p>
+        <div className="rounded-3xl border-2 border-slate-300 bg-white p-6 shadow-sm">
+          <h3 className="text-lg font-black text-slate-950 mb-2">Monthly Procurement Volume (Tons)</h3>
+          <p className="text-xs font-bold text-slate-700 mb-6">Quantity of produce lots accepted across centers</p>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={monthlyProcurement}>
-              <XAxis dataKey="month" stroke="#94a3b8" />
-              <YAxis stroke="#94a3b8" />
+              <XAxis dataKey="month" stroke="#334155" />
+              <YAxis stroke="#334155" />
               <Tooltip />
               <Bar dataKey="quantity" fill="#2f9e44" radius={[6, 6, 0, 0]} name="Tons" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-[#14281d]">
-          <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">Procurement Financial Value (₹ Lakhs)</h3>
-          <p className="text-xs text-slate-500 mb-6">Total procurement transaction value</p>
+        <div className="rounded-3xl border-2 border-slate-300 bg-white p-6 shadow-sm">
+          <h3 className="text-lg font-black text-slate-950 mb-2">Procurement Financial Value (₹ Lakhs)</h3>
+          <p className="text-xs font-bold text-slate-700 mb-6">Total procurement transaction value</p>
           <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={monthlyProcurement}>
-              <XAxis dataKey="month" stroke="#94a3b8" />
-              <YAxis stroke="#94a3b8" />
+              <XAxis dataKey="month" stroke="#334155" />
+              <YAxis stroke="#334155" />
               <Tooltip />
               <Area type="monotone" dataKey="value" stroke="#f59f00" fill="#fff3cc" strokeWidth={3} name="₹ Lakhs" />
             </AreaChart>
@@ -83,22 +83,22 @@ export function ReportsPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-[#14281d]">
-          <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">Region-Wise Procurement Volume</h3>
-          <p className="text-xs text-slate-500 mb-6">Tons collected by geographic region</p>
+        <div className="rounded-3xl border-2 border-slate-300 bg-white p-6 shadow-sm">
+          <h3 className="text-lg font-black text-slate-950 mb-2">Region-Wise Procurement Volume</h3>
+          <p className="text-xs font-bold text-slate-700 mb-6">Tons collected by geographic region</p>
           <ResponsiveContainer width="100%" height={260}>
             <BarChart data={regionData} layout="vertical">
-              <XAxis type="number" stroke="#94a3b8" />
-              <YAxis dataKey="region" type="category" stroke="#94a3b8" width={140} />
+              <XAxis type="number" stroke="#334155" />
+              <YAxis dataKey="region" type="category" stroke="#334155" width={140} />
               <Tooltip />
               <Bar dataKey="tons" fill="#0f766e" radius={[0, 6, 6, 0]} name="Tons" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-[#14281d]">
-          <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">Quality Inspection Grade Split</h3>
-          <p className="text-xs text-slate-500 mb-4">Grade A vs Grade B vs Grade C vs Rejected</p>
+        <div className="rounded-3xl border-2 border-slate-300 bg-white p-6 shadow-sm">
+          <h3 className="text-lg font-black text-slate-950 mb-2">Quality Inspection Grade Split</h3>
+          <p className="text-xs font-bold text-slate-700 mb-4">Grade A vs Grade B vs Grade C vs Rejected</p>
           <ResponsiveContainer width="100%" height={240}>
             <PieChart>
               <Pie data={gradeDistribution} dataKey="value" nameKey="name" outerRadius={85} paddingAngle={4}>

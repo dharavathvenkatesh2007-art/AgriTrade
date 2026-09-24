@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  baseURL: import.meta.env.VITE_API_URL || "https://agritrade-erjv.onrender.com/api",
   headers: { "Content-Type": "application/json" }
 });
 
@@ -37,8 +37,12 @@ export async function getMeApi() {
 
 // Resource Generic API
 export async function fetchResource(resource, params = {}) {
-  const { data } = await api.get(`/${resource}`, { params });
-  return data;
+  try {
+    const { data } = await api.get(`/${resource}`, { params });
+    return data;
+  } catch (e) {
+    return { data: [], pagination: { total: 0 } };
+  }
 }
 
 export async function fetchResourceById(resource, id) {
@@ -134,6 +138,10 @@ export async function paySettlementApi(id, paymentReference) {
 
 // Reports
 export async function getReportSummaryApi() {
-  const { data } = await api.get("/reports/summary");
-  return data.data;
+  try {
+    const { data } = await api.get("/reports/summary");
+    return data.data;
+  } catch (error) {
+    return null;
+  }
 }
