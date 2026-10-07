@@ -6,6 +6,7 @@ import { Header } from "./components/Header.jsx";
 import { Toast } from "./components/Toast.jsx";
 import { LandingPage } from "./pages/LandingPage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
+import { HomePage } from "./pages/HomePage.jsx";
 import { DashboardPage } from "./pages/DashboardPage.jsx";
 import { ProduceLotsPage } from "./pages/ProduceLotsPage.jsx";
 import { InspectionsPage } from "./pages/InspectionsPage.jsx";
@@ -48,7 +49,8 @@ function AppShell() {
 
         <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto">
           <Routes>
-            <Route path="/" element={<DashboardPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/farmers" element={<FarmersPage />} />
             <Route path="/lots" element={<ProduceLotsPage />} />
             <Route path="/inspections" element={<InspectionsPage />} />

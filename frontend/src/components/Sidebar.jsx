@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import {
+  Home,
   LayoutDashboard,
   Users,
   Leaf,
@@ -24,7 +25,13 @@ import { humanStatus } from "../utils/status.js";
 const allNavItems = [
   {
     to: "/app",
-    label: "Dashboard",
+    label: "Home",
+    icon: Home,
+    roles: ["ADMIN", "FARMER", "BUYER", "COLLECTION_MANAGER", "INSPECTOR", "LOGISTICS"]
+  },
+  {
+    to: "/app/dashboard",
+    label: "Analytics Control Room",
     icon: LayoutDashboard,
     roles: ["ADMIN", "FARMER", "BUYER", "COLLECTION_MANAGER", "INSPECTOR", "LOGISTICS"]
   },
