@@ -24,3 +24,20 @@ export function humanStatus(status = "") {
 export function statusClass(status) {
   return statusMap[status] || "bg-slate-100 text-slate-900 border-slate-300 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-600";
 }
+
+export function getDisplayName(val, fallback = "N/A") {
+  if (val === undefined || val === null) return fallback;
+  if (typeof val === "string") return val;
+  if (typeof val === "number") return String(val);
+  if (typeof val === "object") {
+    if (val.name) return val.name;
+    if (typeof val.user === "object" && val.user?.name) return val.user.name;
+    if (typeof val.user === "string") return val.user;
+    if (val.farmerCode) return val.farmerCode;
+    if (val.lotNumber) return val.lotNumber;
+    if (val.poNumber) return val.poNumber;
+    if (val.email) return val.email;
+    return fallback;
+  }
+  return String(val);
+}

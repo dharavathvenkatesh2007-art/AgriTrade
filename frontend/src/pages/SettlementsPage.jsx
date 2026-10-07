@@ -7,6 +7,7 @@ import { Modal } from "../components/Modal.jsx";
 import { StatusBadge } from "../components/StatusBadge.jsx";
 import { settlements as demoSettlements } from "../data/demoData.js";
 import { approveSettlementApi, paySettlementApi } from "../services/api.js";
+import { getDisplayName } from "../utils/status.js";
 
 export function SettlementsPage() {
   const { showToast, user } = useAppStore();
@@ -96,7 +97,7 @@ export function SettlementsPage() {
           isOpen={!!payingSettlement}
           onClose={() => setPayingSettlement(null)}
           title={`Execute Payment: ${payingSettlement.settlementNumber}`}
-          subtitle={`Farmer: ${payingSettlement.farmer} · Payable Net Amount: ₹${Number(payingSettlement.net).toLocaleString("en-IN")}`}
+          subtitle={`Farmer: ${getDisplayName(payingSettlement.farmer, "Demo Farmer")} · Payable Net Amount: ₹${Number(payingSettlement.net).toLocaleString("en-IN")}`}
         >
           <form onSubmit={handlePaySubmit} className="space-y-4">
             <div>

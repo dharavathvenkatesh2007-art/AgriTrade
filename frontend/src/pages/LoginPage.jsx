@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Sprout, Lock, Mail, User, Phone, MapPin, ArrowRight, CheckCircle2, ShieldAlert } from "lucide-react";
@@ -8,8 +8,15 @@ import { loginApi, registerApi } from "../services/api.js";
 import { humanStatus } from "../utils/status.js";
 
 export function LoginPage() {
-  const { setUser, showToast } = useAppStore();
+  const { user, setUser, showToast } = useAppStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/app", { replace: true });
+    }
+  }, [user, navigate]);
+
   const [activeTab, setActiveTab] = useState("login"); // 'login' | 'register'
   const [loading, setLoading] = useState(false);
 
@@ -34,18 +41,54 @@ export function LoginPage() {
     }
   });
 
+function getRegisteredUsers() {
+  try {
+    const raw = localStorage.getItem("agritrade_registered_users");
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveRegisteredUser(userObj) {
+  try {
+    const users = getRegisteredUsers();
+    const existingIdx = users.findIndex((u) => u.email.toLowerCase() === userObj.email.toLowerCase());
+    if (existingIdx >= 0) {
+      users[existingIdx] = { ...users[existingIdx], ...userObj };
+    } else {
+      users.push(userObj);
+    }
+    localStorage.setItem("agritrade_registered_users", JSON.stringify(users));
+  } catch (e) {
+    console.error("Failed to save registered user locally", e);
+  }
+}
+
   async function onLoginSubmit(data) {
     setLoading(true);
     try {
       const res = await loginApi(data.email, data.password);
       setUser(res.user, res.token);
+      saveRegisteredUser(res.user);
       showToast(`Signed in as ${res.user.name} (${humanStatus(res.user.role)})`, "SUCCESS");
       navigate("/app");
     } catch (error) {
-      const demoMatch = demoUsers.find((u) => u.email.toLowerCase() === data.email.toLowerCase()) || demoUsers[0];
-      setUser(demoMatch);
-      showToast(`Signed in as ${demoMatch.name} (${humanStatus(demoMatch.role)})`, "SUCCESS");
-      navigate("/app");
+      const emailLower = (data.email || "").trim().toLowerCase();
+      
+      const localUsers = getRegisteredUsers();
+      const localMatch = localUsers.find((u) => u.email.toLowerCase() === emailLower);
+      const demoMatch = demoUsers.find((u) => u.email.toLowerCase() === emailLower);
+
+      const matchedUser = localMatch || demoMatch;
+
+      if (matchedUser) {
+        setUser(matchedUser);
+        showToast(`Signed in as ${matchedUser.name} (${humanStatus(matchedUser.role)})`, "SUCCESS");
+        navigate("/app");
+      } else {
+        showToast(error.message || "Invalid email or password. Please check your credentials or register a new account.", "ERROR");
+      }
     } finally {
       setLoading(false);
     }
@@ -55,6 +98,8 @@ export function LoginPage() {
     setLoading(true);
     try {
       const res = await registerApi(data);
+      const userToSave = { ...res.user, password: data.password };
+      saveRegisteredUser(userToSave);
       setUser(res.user, res.token);
       showToast(`Account registered successfully as ${res.user.name} (${humanStatus(res.user.role)})`, "SUCCESS");
       navigate("/app");
@@ -63,9 +108,14 @@ export function LoginPage() {
         _id: `user-${Date.now()}`,
         name: data.name,
         email: data.email,
+        password: data.password,
         role: data.role,
+        phone: data.phone,
+        village: data.village,
+        district: data.district,
         region: "North Maharashtra"
       };
+      saveRegisteredUser(newUser);
       setUser(newUser);
       showToast(`Registered successfully as ${newUser.name} (${humanStatus(newUser.role)})`, "SUCCESS");
       navigate("/app");

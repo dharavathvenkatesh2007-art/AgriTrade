@@ -8,6 +8,7 @@ import { Modal } from "../components/Modal.jsx";
 import { StatusBadge } from "../components/StatusBadge.jsx";
 import { purchaseOrders as demoPOs, lots as demoLots, produceImages } from "../data/demoData.js";
 import { createResource, allocatePoApi } from "../services/api.js";
+import { getDisplayName } from "../utils/status.js";
 
 export function PurchaseOrdersPage() {
   const { showToast, user } = useAppStore();
@@ -150,7 +151,7 @@ export function PurchaseOrdersPage() {
                 </div>
 
                 <p className="text-xs font-bold text-slate-600 dark:text-slate-300">
-                  {item.lotNumber} · Farmer: {item.farmer?.name || item.farmer}
+                  {item.lotNumber} · Farmer: {getDisplayName(item.farmer, "Demo Farmer")}
                 </p>
 
                 <div className="rounded-2xl bg-slate-50 p-3 text-xs font-bold text-slate-700 dark:bg-white/5 dark:text-slate-200 space-y-1">

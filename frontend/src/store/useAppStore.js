@@ -5,7 +5,7 @@ const savedUser = localStorage.getItem("agritrade_user");
 const savedToken = localStorage.getItem("agritrade_token");
 
 export const useAppStore = create((set, get) => ({
-  user: savedUser ? JSON.parse(savedUser) : demoUsers[0],
+  user: savedUser ? JSON.parse(savedUser) : null,
   token: savedToken || null,
   search: "",
   toast: null,

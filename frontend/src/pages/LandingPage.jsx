@@ -15,8 +15,10 @@ import {
 } from "lucide-react";
 import { workflow } from "../data/demoData.js";
 import { humanStatus } from "../utils/status.js";
+import { useAppStore } from "../store/useAppStore.js";
 
 export function LandingPage() {
+  const { user } = useAppStore();
   return (
     <div className="min-h-screen bg-[#f7faf4] text-slate-900 dark:bg-[#0c1811] dark:text-slate-100">
       {/* Hero Section */}
@@ -42,10 +44,10 @@ export function LandingPage() {
               Workflow
             </a>
             <Link
-              to="/login"
+              to={user ? "/app" : "/login"}
               className="rounded-xl bg-leaf-500 px-5 py-2.5 text-xs font-black tracking-wide text-white shadow-soft hover:bg-leaf-600"
             >
-              Sign In / Demo
+              {user ? "Go to Dashboard" : "Sign In"}
             </Link>
           </div>
         </header>
@@ -65,10 +67,10 @@ export function LandingPage() {
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
-              to="/login"
+              to={user ? "/app" : "/login"}
               className="flex items-center gap-2 rounded-2xl bg-leaf-500 px-7 py-4 text-sm font-black text-white shadow-2xl transition-all hover:bg-leaf-600 hover:-translate-y-0.5"
             >
-              Open Interactive Platform <ArrowRight className="h-4 w-4" />
+              {user ? "Go to Dashboard" : "Open Interactive Platform"} <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href="#roles"
@@ -183,10 +185,10 @@ export function LandingPage() {
 
         <div className="mt-16 text-center">
           <Link
-            to="/login"
+            to={user ? "/app" : "/login"}
             className="inline-flex items-center gap-2 rounded-2xl bg-leaf-600 px-8 py-4 text-sm font-black text-white shadow-xl hover:bg-leaf-700"
           >
-            Launch AgriTrade Demo <ArrowRight className="h-4 w-4" />
+            {user ? "Go to Dashboard" : "Launch AgriTrade Platform"} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </section>

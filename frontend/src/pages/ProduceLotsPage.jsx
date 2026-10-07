@@ -9,10 +9,29 @@ import { StatusBadge } from "../components/StatusBadge.jsx";
 import { LotTimeline } from "../components/LotTimeline.jsx";
 import { lots as demoLots, produceImages } from "../data/demoData.js";
 import { fetchResource, createResource, receiveLotApi } from "../services/api.js";
+import { getDisplayName } from "../utils/status.js";
+
+function getLocalLots() {
+  try {
+    const raw = localStorage.getItem("agritrade_lots");
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveLocalLots(lotsList) {
+  try {
+    localStorage.setItem("agritrade_lots", JSON.stringify(lotsList));
+  } catch (e) {}
+}
 
 export function ProduceLotsPage() {
   const { showToast, user } = useAppStore();
-  const [lots, setLots] = useState(demoLots);
+  const [lots, setLots] = useState(() => {
+    const local = getLocalLots();
+    return local.length > 0 ? local : demoLots;
+  });
   const [selectedLot, setSelectedLot] = useState(null);
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
@@ -42,7 +61,10 @@ export function ProduceLotsPage() {
   useEffect(() => {
     fetchResource("lots")
       .then((res) => {
-        if (res.data && res.data.length > 0) setLots(res.data);
+        if (res.data && res.data.length > 0) {
+          setLots(res.data);
+          saveLocalLots(res.data);
+        }
       })
       .catch(() => {});
   }, []);
@@ -70,7 +92,9 @@ export function ProduceLotsPage() {
       await createResource("lots", newLot);
     } catch (e) {}
 
-    setLots([newLot, ...lots]);
+    const updated = [newLot, ...lots];
+    setLots(updated);
+    saveLocalLots(updated);
     showToast(`Added produce lot ${newLotNumber} with photo`, "SUCCESS");
     setCreateModalOpen(false);
     reset();
@@ -81,11 +105,11 @@ export function ProduceLotsPage() {
       await receiveLotApi(lot._id || lot.id, "Received at collection center");
     } catch (e) {}
 
-    setLots(
-      lots.map((l) =>
-        (l._id === lot._id || l.lotNumber === lot.lotNumber) ? { ...l, status: "RECEIVED" } : l
-      )
+    const updated = lots.map((l) =>
+      (l._id === lot._id || l.lotNumber === lot.lotNumber) ? { ...l, status: "RECEIVED" } : l
     );
+    setLots(updated);
+    saveLocalLots(updated);
     showToast(`Lot ${lot.lotNumber} marked as RECEIVED`, "SUCCESS");
     setSelectedLot(null);
   }
@@ -139,7 +163,7 @@ export function ProduceLotsPage() {
                   </span>
                 </div>
                 <p className="mt-1 text-xs font-extrabold text-slate-600 dark:text-slate-300">
-                  {lot.lotNumber} · Farmer: {lot.farmer?.name || lot.farmer}
+                  {lot.lotNumber} · Farmer: {getDisplayName(lot.farmer, "Demo Farmer")}
                 </p>
 
                 <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-3 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-slate-300">
@@ -165,7 +189,7 @@ export function ProduceLotsPage() {
           isOpen={!!selectedLot}
           onClose={() => setSelectedLot(null)}
           title={`${selectedLot.lotNumber} - ${selectedLot.produce}`}
-          subtitle={`Farmer: ${selectedLot.farmer?.name || selectedLot.farmer} · Location: ${selectedLot.center || "Lasalgaon Center"}`}
+          subtitle={`Farmer: ${getDisplayName(selectedLot.farmer, "Demo Farmer")} · Location: ${selectedLot.center || "Lasalgaon Center"}`}
           maxWidth="max-w-3xl"
         >
           <div className="space-y-6">

@@ -192,7 +192,14 @@ function renderCellValue(row, col) {
   const val = row[col];
   if (val === undefined || val === null) return "-";
   if (typeof val === "object") {
-    return val.name || val.lotNumber || val.poNumber || val.farmerCode || val.registrationNumber || JSON.stringify(val);
+    if (val.name) return val.name;
+    if (typeof val.user === "object" && val.user?.name) return val.user.name;
+    if (typeof val.user === "string") return val.user;
+    if (val.farmerCode) return val.farmerCode;
+    if (val.lotNumber) return val.lotNumber;
+    if (val.poNumber) return val.poNumber;
+    if (val.registrationNumber) return val.registrationNumber;
+    return val._id || "-";
   }
   if (["value", "grossAmount", "netPayableAmount", "totalValue", "net"].includes(col)) {
     return `₹${Number(val).toLocaleString("en-IN")}`;

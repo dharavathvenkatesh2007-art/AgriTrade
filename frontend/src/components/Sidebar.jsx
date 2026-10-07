@@ -40,7 +40,7 @@ const allNavItems = [
     label: "Produce Lots",
     farmerLabel: "My Produce Lots (+Sell)",
     icon: Leaf,
-    roles: ["ADMIN", "FARMER", "COLLECTION_MANAGER", "INSPECTOR"]
+    roles: ["ADMIN", "FARMER", "BUYER", "COLLECTION_MANAGER", "INSPECTOR", "LOGISTICS"]
   },
   {
     to: "/app/orders",
