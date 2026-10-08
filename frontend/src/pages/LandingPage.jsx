@@ -34,7 +34,7 @@ export function LandingPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-leaf-500 text-white shadow-soft">
               <Sprout className="h-6 w-6" />
             </div>
-            <span>AgriTrade</span>
+            <span className="text-white">AgriTrade</span>
           </Link>
           <div className="flex items-center gap-4">
             <a href="#features" className="hidden text-sm font-bold text-white/90 hover:text-white sm:block">
@@ -56,11 +56,6 @@ export function LandingPage() {
           <div className="inline-flex max-w-fit items-center gap-2 rounded-full border border-leaf-400/40 bg-leaf-950/60 px-4 py-2 text-xs font-extrabold text-leaf-300 backdrop-blur-md">
             <Sparkles className="h-4 w-4 text-harvest-500" /> Complete MERN Farm Produce Supply Chain Platform
           </div>
-
-          <h1 className="mt-6 max-w-4xl text-4xl font-black leading-tight tracking-tight sm:text-6xl md:text-7xl">
-            From Farm to Market, <span className="text-leaf-400">Simplified.</span>
-          </h1>
-
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">
             AgriTrade connects farmers, collection centers, quality inspectors, buyers, logistics teams, warehouses, and administrators in one secure digital operating system with live traceability and automated settlement calculations.
           </p>
